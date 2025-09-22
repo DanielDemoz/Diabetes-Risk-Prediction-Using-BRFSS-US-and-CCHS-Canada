@@ -22,19 +22,19 @@ The work highlights the similarities and differences between U.S. and Canadian h
 
 The project uses the following Python libraries:
 
-Data Handling: pandas, numpy
+- Data Handling: pandas, numpy
 
-Visualization: matplotlib, seaborn
+- Visualization: matplotlib, seaborn
 
-Machine Learning:
+- Machine Learning:
 
-scikit-learn (train/test split, scaling, logistic regression, random forest, metrics)
+- scikit-learn (train/test split, scaling, logistic regression, random forest, metrics)
 
-xgboost (gradient boosting)
+- xgboost (gradient boosting)
 
-Imbalanced Data Handling: imblearn.SMOTE
+- Imbalanced Data Handling: imblearn.SMOTE
 
-Interpretability: shap
+- Interpretability: shap
 
 📂 Datasets
 
