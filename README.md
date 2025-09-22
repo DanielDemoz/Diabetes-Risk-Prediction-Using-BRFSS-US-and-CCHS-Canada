@@ -6,15 +6,15 @@ Author: Daniel S. Demoz
 
 This project integrates two large health survey datasets—the U.S. BRFSS (Behavioral Risk Factor Surveillance System) and the Canadian CCHS (Canadian Community Health Survey)—to analyze risk factors for diabetes. It involves:
 
-Data loading, cleaning, and preprocessing.
+- Data loading, cleaning, and preprocessing.
 
-Exploratory Data Analysis (EDA).
+- Exploratory Data Analysis (EDA).
 
-Building predictive models (Logistic Regression, Random Forest, and XGBoost).
+- Building predictive models (Logistic Regression, Random Forest, and XGBoost).
 
-Model comparison across both datasets.
+- Model comparison across both datasets.
 
-Feature importance interpretation using SHAP and tree-based models.
+- Feature importance interpretation using SHAP and tree-based models.
 
 The work highlights the similarities and differences between U.S. and Canadian health data, emphasizing BMI, smoking, physical activity, and diet as key diabetes-related factors.
 
