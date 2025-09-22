@@ -1,4 +1,4 @@
-README — Diabetes Risk Prediction using BRFSS & CCHS
+# Diabetes Risk Prediction using BRFSS & CCHS
 
 Author: Daniel S. Demoz
 
