@@ -1,0 +1,28 @@
+title: "Diabetes Risk Prediction Dashboard"
+description: "Interactive dashboard for analyzing diabetes risk factors using BRFSS 2015 dataset"
+author: "Daniel S. Demoz"
+baseurl: ""
+url: "https://danieldemoz.github.io"
+repository: "DanielDemoz/Diabetes-Risk-Prediction-Using-BRFSS-US-and-CCHS-Canada"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: minima
+
+# Exclude from processing
+exclude:
+  - README.md
+  - DASHBOARD_README.md
+  - dashboard.py
+  - requirements.txt
+  - run_dashboard.py
+  - run_dashboard.bat
+  - run_dashboard.sh
+  - static_dashboard.html
+  - dashboard_launcher.html
+  - open_dashboard.html
+  - data/
+  - .gitignore
+  - LICENSE
+  - Summarized Report.pdf
