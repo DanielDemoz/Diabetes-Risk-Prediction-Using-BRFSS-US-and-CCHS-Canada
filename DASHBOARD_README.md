@@ -2,6 +2,18 @@
 
 An interactive web dashboard for analyzing diabetes risk factors using the BRFSS (Behavioral Risk Factor Surveillance System) dataset from the United States.
 
+## 🌐 **Live Dashboard Access**
+
+**🔗 [View Dashboard on GitHub](https://github.com/DanielDemoz/Diabetes-Risk-Prediction-Using-BRFSS-US-and-CCHS-Canada)**
+
+**📱 [Open Static Dashboard](https://github.com/DanielDemoz/Diabetes-Risk-Prediction-Using-BRFSS-US-and-CCHS-Canada/blob/main/static_dashboard.html)** - Click "Download" then open the HTML file in your browser for immediate access!
+
+## 🚀 **Quick Start (No Installation Required)**
+
+1. **Download** the `static_dashboard.html` file from the repository
+2. **Double-click** the file to open it in your browser
+3. **Start exploring** the interactive dashboard immediately!
+
 ## 🚀 Features
 
 - **📊 Overview Page**: Key statistics and dataset information
