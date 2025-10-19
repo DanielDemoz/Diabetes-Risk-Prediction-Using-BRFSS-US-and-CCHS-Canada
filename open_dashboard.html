@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🩺 Diabetes Dashboard Launcher</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 3rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .launch-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.3rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+            display: inline-block;
+            margin: 0.5rem;
+        }
+        
+        .launch-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .launch-btn:active {
+            transform: translateY(-1px);
+        }
+        
+        .features {
+            margin-top: 2rem;
+            text-align: left;
+        }
+        
+        .features h3 {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .features ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .features li:before {
+            content: "✅ ";
+            margin-right: 0.5rem;
+        }
+        
+        .loading {
+            display: none;
+            margin-top: 1rem;
+        }
+        
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 3px solid white;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🩺 Diabetes Risk Prediction Dashboard</h1>
+        <p>Interactive analysis of health indicators from BRFSS 2015 dataset</p>
+        
+        <a href="#" class="launch-btn" onclick="loadDashboard()">
+            🚀 Launch Interactive Dashboard
+        </a>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Opening dashboard...</p>
+        </div>
+        
+        <div class="features">
+            <h3>📊 Dashboard Features</h3>
+            <ul>
+                <li>Dataset overview and statistics</li>
+                <li>Interactive data exploration</li>
+                <li>Machine learning model comparison</li>
+                <li>Personalized risk prediction</li>
+                <li>Real-time visualizations</li>
+                <li>No installation required</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function loadDashboard() {
+            document.getElementById('loading').style.display = 'block';
+            
+            // Load the dashboard content
+            fetch('static_dashboard.html')
+                .then(response => response.text())
+                .then(html => {
+                    // Replace the entire page content with the dashboard
+                    document.documentElement.innerHTML = html;
+                })
+                .catch(error => {
+                    console.error('Error loading dashboard:', error);
+                    document.getElementById('loading').style.display = 'none';
+                    alert('Error loading dashboard. Please try opening static_dashboard.html directly.');
+                });
+        }
+        
+        // Auto-load dashboard after 3 seconds if user doesn't click
+        setTimeout(() => {
+            if (confirm('Would you like to automatically load the dashboard?')) {
+                loadDashboard();
+            }
+        }, 3000);
+    </script>
+</body>
+</html>
