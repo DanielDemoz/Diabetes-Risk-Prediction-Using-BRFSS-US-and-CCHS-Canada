@@ -1,6 +1,11 @@
 # Diabetes Risk Factor Analysis: U.S. vs. Canada  
 **Author:** Daniel S. Demoz
 
+## 🌐 **Interactive Dashboard Available!**
+
+**🔗 [View Live Dashboard](https://github.com/DanielDemoz/Diabetes-Risk-Prediction-Using-BRFSS-US-and-CCHS-Canada)**  
+**📱 [Open Static Dashboard](https://github.com/DanielDemoz/Diabetes-Risk-Prediction-Using-BRFSS-US-and-CCHS-Canada/blob/main/static_dashboard.html)** - Download and open in browser for immediate access!
+
 ## Project Overview  
 This project integrates two large health survey datasets—the U.S. BRFSS (Behavioral Risk Factor Surveillance System) and the Canadian CCHS (Canadian Community Health Survey)—to analyze risk factors for diabetes. It includes:
 
@@ -9,6 +14,7 @@ This project integrates two large health survey datasets—the U.S. BRFSS (Behav
 - Predictive modeling using Logistic Regression, Random Forest, and XGBoost  
 - Model comparison across both datasets  
 - Feature importance interpretation using SHAP and tree-based models  
+- **🆕 Interactive web dashboard for data exploration and risk prediction**
 
 The analysis highlights key diabetes-related factors such as BMI, smoking, physical activity, and diet, while comparing health trends between the U.S. and Canada.
 
