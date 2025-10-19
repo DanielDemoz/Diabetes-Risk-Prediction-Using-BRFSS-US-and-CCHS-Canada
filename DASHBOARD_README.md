@@ -8,8 +8,18 @@ An interactive web dashboard for analyzing diabetes risk factors using the BRFSS
 
 **📱 [Open Static Dashboard](https://github.com/DanielDemoz/Diabetes-Risk-Prediction-Using-BRFSS-US-and-CCHS-Canada/blob/main/static_dashboard.html)** - Click "Download" then open the HTML file in your browser for immediate access!
 
+**💻 Local File Path:** `file:///C:/Users/asbda/OneDrive/Documents/GitHub/Diabetes-Risk-Prediction-Using-BRFSS-US-and-CCHS-Canada/static_dashboard.html`
+
+**🎯 One-Click Launcher:** `file:///C:/Users/asbda/OneDrive/Documents/GitHub/Diabetes-Risk-Prediction-Using-BRFSS-US-and-CCHS-Canada/open_dashboard.html` - Beautiful launcher page with one-click access!
+
 ## 🚀 **Quick Start (No Installation Required)**
 
+### Option 1: One-Click Launcher (Recommended)
+1. **Download** the `open_dashboard.html` file from the repository
+2. **Double-click** the file to open the beautiful launcher page
+3. **Click "Launch Interactive Dashboard"** for one-click access!
+
+### Option 2: Direct Access
 1. **Download** the `static_dashboard.html` file from the repository
 2. **Double-click** the file to open it in your browser
 3. **Start exploring** the interactive dashboard immediately!
