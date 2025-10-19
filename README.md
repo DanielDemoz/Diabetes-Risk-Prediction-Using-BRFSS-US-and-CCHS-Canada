@@ -1,145 +1,60 @@
-# Diabetes Risk Factor Analysis: U.S. vs. Canada  
+# 🩺 Diabetes Risk Prediction Dashboard
 **Author:** Daniel S. Demoz
 
-## 🌐 **Interactive Dashboard Available!**
+## 🚀 **LIVE INTERACTIVE DASHBOARD**
 
-**🚀 [LIVE WEB DASHBOARD](https://danieldemoz.github.io/Diabetes-Risk-Prediction-Using-BRFSS-US-and-CCHS-Canada/)** - **Click here for instant access!**
+**🌐 [CLICK HERE TO ACCESS THE DASHBOARD](https://danieldemoz.github.io/Diabetes-Risk-Prediction-Using-BRFSS-US-and-CCHS-Canada/)**
 
-**🔗 [View Repository](https://github.com/DanielDemoz/Diabetes-Risk-Prediction-Using-BRFSS-US-and-CCHS-Canada)**  
-**📱 [Download Dashboard](https://github.com/DanielDemoz/Diabetes-Risk-Prediction-Using-BRFSS-US-and-CCHS-Canada/blob/main/static_dashboard.html)** - Download and open in browser for offline access!
+*No downloads required - works instantly in any web browser!*
 
-## Project Overview  
-This project integrates two large health survey datasets—the U.S. BRFSS (Behavioral Risk Factor Surveillance System) and the Canadian CCHS (Canadian Community Health Survey)—to analyze risk factors for diabetes. It includes:
+## 📊 **Dashboard Features**
 
-- Data loading, cleaning, and preprocessing  
-- Exploratory Data Analysis (EDA)  
-- Predictive modeling using Logistic Regression, Random Forest, and XGBoost  
-- Model comparison across both datasets  
-- Feature importance interpretation using SHAP and tree-based models  
-- **🆕 Interactive web dashboard for data exploration and risk prediction**
+### **🎯 Interactive Pages:**
+- **📈 Overview**: Dataset statistics and diabetes distribution
+- **🔍 EDA**: Interactive data exploration with filtering
+- **🤖 Models**: Machine learning model performance comparison
+- **🔮 Prediction**: Personalized diabetes risk assessment
 
-The analysis highlights key diabetes-related factors such as BMI, smoking, physical activity, and diet, while comparing health trends between the U.S. and Canada.
+### **💡 Key Features:**
+- **Real-time visualizations** with Plotly charts
+- **Interactive filtering** and data exploration
+- **Personalized risk prediction** based on health factors
+- **Professional design** with responsive layout
+- **No installation required** - works in any browser
 
-## Libraries Used  
+## 📋 **About the Project**
+This dashboard analyzes diabetes risk factors using the BRFSS (Behavioral Risk Factor Surveillance System) dataset from the United States. The analysis includes:
 
-**Data Handling**  
-- pandas  
-- numpy  
+- **Data Analysis**: Health indicators and risk factors
+- **Machine Learning**: Logistic Regression, Random Forest, and XGBoost models
+- **Risk Assessment**: Personalized diabetes risk prediction
+- **Visualization**: Interactive charts and data exploration
 
-**Visualization**  
-- matplotlib  
-- seaborn  
+The dashboard highlights key diabetes-related factors such as BMI, blood pressure, cholesterol, smoking, physical activity, and diet.
 
-**Machine Learning**  
-- scikit-learn (train/test split, scaling, logistic regression, random forest, metrics)  
-- xgboost (gradient boosting)  
+## 🛠️ **Technical Details**
 
-**Imbalanced Data Handling**  
-- imblearn.SMOTE  
+**Built with:**
+- HTML5, CSS3, JavaScript
+- Plotly.js for interactive visualizations
+- Responsive design for all devices
 
-**Interpretability**  
-- shap  
+**Data Source:**
+- BRFSS 2015 (Behavioral Risk Factor Surveillance System)
+- 253,680+ health records from the United States
 
-## Datasets  
+**Models Used:**
+- Logistic Regression (ROC-AUC: 0.815)
+- Random Forest (ROC-AUC: 0.791)  
+- XGBoost (ROC-AUC: 0.821)
 
-**BRFSS (U.S.):**  
-Filename: `diabetes_012_health_indicators_BRFSS2015.csv`  
-- Contains health indicators such as BMI, smoking, physical activity, blood pressure, and cholesterol  
-- Source:  
-  - [GitHub](https://github.com/clairerebello/Diabetes_Dataset/blob/main/diabetes_012_health_indicators_BRFSS2015.csv)  
-  - [Kaggle](https://www.kaggle.com/datasets/alexteboul/diabetes-health-indicators-dataset)  
-  - [Hugging Face](https://huggingface.co/spaces/cnasa/Diabetes_Model/blob/main/diabetes_012__health_indicators_BRFSS2015.csv)
+## 📞 **Contact**
 
-**CCHS (Canada):**  
-Filename: `pumf_cchs.csv`  
-- Includes self-reported and adjusted BMI, smoking habits, physical activity (minutes & WHO guidelines), fruit/vegetable intake, and chronic disease indicators  
-- Source:  
-  - [Statistics Canada – Public Use Microdata File](https://www150.statcan.gc.ca/n1/pub/82m0013x/82m0013x2024001-eng.htm)  
-  - [Health Data Nexus](https://healthdatanexus.ai/content/cchs-pumf/1.1/)  
-  - [GitHub project using CCHS](https://github.com/venkateshsoundar/canadian-qol-analysis)
-
-Note: Both datasets are assumed to be stored in Google Drive and accessed via Google Colab.
-
-## Data Preprocessing  
-
-**BRFSS**  
-- Renamed columns for clarity (e.g., `Diabetes_012` → `diabetes`, `HighBP` → `high_bp`)  
-- Selected relevant health indicators for analysis  
-
-**CCHS**  
-- Renamed variables based on data dictionary  
-- Recoded categorical values into binary (0/1) where applicable (`diabetes`, `high_bp`, `high_chol`)  
-- Replaced special codes (e.g., 7 = Refusal, 9 = Not Stated) with NaN  
-- Imputed missing values:  
-  - Numerical → Median  
-  - Categorical-like → Mode  
-  - Binary → Mode  
-- Applied one-hot encoding to categorical variables (`smoker_type`, `smoker_status`, `phys_activity_who`)  
-
-## Exploratory Data Analysis (EDA)  
-
-**Visualizations**  
-- Histograms: BMI, fruit/vegetable intake, physical activity  
-- Boxplots: BMI/fruit/veg vs. diabetes outcomes  
-- Countplots: High BP, cholesterol, smoking distributions  
-- Correlation Heatmaps: Diabetes associations with other variables  
-
-**Findings**  
-- BMI is consistently higher among individuals with diabetes in both datasets  
-- Physical activity tends to be lower in diabetic groups, especially in CCHS  
-- High blood pressure and cholesterol are strong diabetes risk indicators  
-- Smoking status is defined differently across datasets (binary vs. multi-category)  
-
-## Machine Learning Models  
-
-Models were trained separately for CCHS and compared to BRFSS:
-
-**Logistic Regression**  
-- Baseline interpretable model  
-- Performance measured by ROC-AUC  
-
-**Random Forest Classifier**  
-- Ensemble model for non-linear relationships  
-- Feature importance used for interpretation  
-
-**XGBoost Classifier**  
-- Gradient boosting model, often outperforming others  
-- Feature importance and SHAP values used for interpretation  
-
-**Class Imbalance Handling**  
-- Applied SMOTE to balance diabetes vs. non-diabetes cases  
-
-## Results  
-
-**ROC-AUC Scores (CCHS Models)**  
-| Model              | ROC-AUC |
-|--------------------|---------|
-| Logistic Regression| ~0.70   |
-| Random Forest      | ~0.75   |
-| XGBoost            | ~0.77   |
-
-**Feature Importances (CCHS & BRFSS Comparison)**  
-Top predictors across both datasets:  
-- BMI (measured or self-reported)  
-- High blood pressure  
-- High cholesterol  
-
-Note: Differences exist in smoking and physical activity due to dataset definitions.
-
-## Model Interpretability  
-
-**Random Forest and XGBoost**  
-- Feature importance plots highlight BMI, high blood pressure, and cholesterol  
-- SHAP values show feature-level impacts on individual predictions  
-- Confirms BMI and hypertension as strong diabetes predictors  
-
-## Key Takeaways  
-
-- Consistent risk factors: BMI, high blood pressure, and cholesterol are strongly linked to diabetes in both datasets  
-- Variable definitions: CCHS offers richer categorical detail; BRFSS uses simpler binary coding  
-- Data harmonization challenge: Cross-country comparison requires careful handling of survey methodology differences  
-- Model performance: XGBoost consistently outperforms Logistic Regression and Random Forest  
+**Author:** Daniel S. Demoz  
+**Repository:** [GitHub](https://github.com/DanielDemoz/Diabetes-Risk-Prediction-Using-BRFSS-US-and-CCHS-Canada)
 
 ---
+
+*This dashboard is for educational and research purposes. Medical decisions should not be based solely on this tool. Please consult healthcare professionals for medical advice.*
 
 
