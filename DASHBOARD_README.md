@@ -4,13 +4,11 @@ An interactive web dashboard for analyzing diabetes risk factors using the BRFSS
 
 ## 🌐 **Live Dashboard Access**
 
-**🔗 [View Dashboard on GitHub](https://github.com/DanielDemoz/Diabetes-Risk-Prediction-Using-BRFSS-US-and-CCHS-Canada)**
+**🚀 [LIVE WEB DASHBOARD](https://danieldemoz.github.io/Diabetes-Risk-Prediction-Using-BRFSS-US-and-CCHS-Canada/)** - **Click here for instant access!**
 
-**📱 [Open Static Dashboard](https://github.com/DanielDemoz/Diabetes-Risk-Prediction-Using-BRFSS-US-and-CCHS-Canada/blob/main/static_dashboard.html)** - Click "Download" then open the HTML file in your browser for immediate access!
+**🔗 [View Repository on GitHub](https://github.com/DanielDemoz/Diabetes-Risk-Prediction-Using-BRFSS-US-and-CCHS-Canada)**
 
-**💻 Local File Path:** `file:///C:/Users/asbda/OneDrive/Documents/GitHub/Diabetes-Risk-Prediction-Using-BRFSS-US-and-CCHS-Canada/static_dashboard.html`
-
-**🎯 One-Click Launcher:** `file:///C:/Users/asbda/OneDrive/Documents/GitHub/Diabetes-Risk-Prediction-Using-BRFSS-US-and-CCHS-Canada/open_dashboard.html` - Beautiful launcher page with one-click access!
+**📱 [Download for Offline Use](https://github.com/DanielDemoz/Diabetes-Risk-Prediction-Using-BRFSS-US-and-CCHS-Canada/blob/main/static_dashboard.html)** - Click "Download" then open the HTML file in your browser for offline access!
 
 ## 🚀 **Quick Start (No Installation Required)**
 
