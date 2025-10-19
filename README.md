@@ -3,12 +3,10 @@
 
 ## 🌐 **Interactive Dashboard Available!**
 
-**🔗 [View Live Dashboard](https://github.com/DanielDemoz/Diabetes-Risk-Prediction-Using-BRFSS-US-and-CCHS-Canada)**  
-**📱 [Open Static Dashboard](https://github.com/DanielDemoz/Diabetes-Risk-Prediction-Using-BRFSS-US-and-CCHS-Canada/blob/main/static_dashboard.html)** - Download and open in browser for immediate access!
+**🚀 [LIVE WEB DASHBOARD](https://danieldemoz.github.io/Diabetes-Risk-Prediction-Using-BRFSS-US-and-CCHS-Canada/)** - **Click here for instant access!**
 
-**💻 Local File Path:** `file:///C:/Users/asbda/OneDrive/Documents/GitHub/Diabetes-Risk-Prediction-Using-BRFSS-US-and-CCHS-Canada/static_dashboard.html`
-
-**🎯 One-Click Launcher:** `file:///C:/Users/asbda/OneDrive/Documents/GitHub/Diabetes-Risk-Prediction-Using-BRFSS-US-and-CCHS-Canada/open_dashboard.html` - Beautiful launcher page with one-click access!
+**🔗 [View Repository](https://github.com/DanielDemoz/Diabetes-Risk-Prediction-Using-BRFSS-US-and-CCHS-Canada)**  
+**📱 [Download Dashboard](https://github.com/DanielDemoz/Diabetes-Risk-Prediction-Using-BRFSS-US-and-CCHS-Canada/blob/main/static_dashboard.html)** - Download and open in browser for offline access!
 
 ## Project Overview  
 This project integrates two large health survey datasets—the U.S. BRFSS (Behavioral Risk Factor Surveillance System) and the Canadian CCHS (Canadian Community Health Survey)—to analyze risk factors for diabetes. It includes:
