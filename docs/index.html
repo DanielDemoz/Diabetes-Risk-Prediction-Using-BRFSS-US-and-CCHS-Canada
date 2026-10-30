@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Diabetes Risk Model | US and Canadian survey data | Daniel S. Demoz</title>
+  <meta name="description" content="A diabetes risk model trained on 249,049 US survey answers (BRFSS 2015), with its calibration, fairness checks and limits shown. An honest re-analysis of a US and Canada comparison.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://www.danieldemoz.com/kit/rai.css">
+  <style>
+    .checks{display:grid;gap:8px}
+    .checks label{display:flex;gap:10px;align-items:flex-start;font-size:.95rem;cursor:pointer}
+    .checks input{margin-top:4px;accent-color:var(--copper)}
+    .why{margin:14px 0 0;padding:0;list-style:none;display:grid;gap:6px;font-size:.92rem}
+    .why li{display:flex;justify-content:space-between;gap:12px;border-top:1px solid rgba(255,255,255,.12);padding-top:6px}
+    .why b{white-space:nowrap}
+    input[type=number]{width:100%}
+  </style>
+</head>
+<body>
+  <div class="rai-top"><div class="wrap">
+    <span>Daniel S. Demoz · Responsible AI in practice</span>
+    <span><a href="https://www.danieldemoz.com/projects">All projects</a> &nbsp;·&nbsp; <a href="https://github.com/DanielDemoz/Diabetes-Risk-Prediction-Using-BRFSS-US-and-CCHS-Canada">Code</a></span>
+  </div></div>
+
+  <header class="rai-hero"><div class="wrap">
+    <p class="eyebrow">Diabetes risk model</p>
+    <h1>How well do survey answers predict diabetes, and for whom does that work less well?</h1>
+    <p class="lead">A logistic regression trained on US health survey answers (BRFSS 2015). It runs in your browser. Each result shows what drove it and how far to trust it. This is a learning project, not a medical tool.</p>
+    <div class="chips">
+      <span class="chip status">Live model · real survey data</span>
+      <span class="chip" id="chip-n">BRFSS 2015</span>
+      <span class="chip">Fairness checked by income and education</span>
+      <span class="chip">Not a diagnosis</span>
+    </div>
+  </div></header>
+
+  <nav class="steps" aria-label="Sections"><div class="wrap">
+    <a href="#try"><b>1</b>Try the model</a>
+    <a href="#evidence"><b>2</b>Evidence</a>
+    <a href="#country"><b>3</b>US vs Canada</a>
+    <a href="#fairness"><b>4</b>Fairness check</a>
+    <a href="#oversight"><b>5</b>Limits</a>
+    <a href="#framework"><b>6</b>Reliable AI checklist</a>
+  </div></nav>
+
+  <main>
+    <section id="try"><div class="wrap">
+      <h2>Try the model</h2>
+      <p class="sub">Enter a profile. The model estimates how common diagnosed diabetes is among US adults who answered the survey the same way.</p>
+      <div class="grid g2" style="margin-top:18px">
+        <div class="card">
+          <div class="grid g2" style="gap:12px">
+            <div class="field"><label for="age">Age</label><select id="age"></select></div>
+            <div class="field"><label for="bmi">BMI</label><input id="bmi" type="number" min="12" max="80" step="0.1" value="27"><small id="bmi-band"></small></div>
+          </div>
+          <div class="field"><label>Sex</label><div class="seg" id="sex"></div></div>
+          <div class="field"><label>General health, in your own words</label><div class="seg" id="gen"></div></div>
+          <div class="field"><label>Answers "yes" to</label><div class="checks" id="bins"></div></div>
+        </div>
+        <div>
+          <div class="result" aria-live="polite">
+            <p class="label" style="color:var(--copper-light)">Share with diagnosed diabetes among similar survey answers</p>
+            <div class="big" id="prob">–</div>
+            <div class="bar"><i id="fill"></i><em id="avgmark" title="Average"></em></div>
+            <div class="muted" id="verdict"></div>
+            <div class="compare">
+              <div><b id="c-avg">–</b><span>Average, all adults in the data</span></div>
+              <div><b id="c-age">–</b><span>Typical answers, same age and sex</span></div>
+              <div><b id="c-flag">–</b><span>Above the 20% review line?</span></div>
+            </div>
+            <p class="label" style="color:var(--copper-light);margin-top:16px">What moved the estimate most</p>
+            <ul class="why" id="why"></ul>
+            <div id="notes"></div>
+          </div>
+          <div class="note info">This is not a diagnosis or a medical opinion. For a validated Canadian screening tool, use the <a href="https://diabetes.ca/static/risk-assessment.html">CANRISK questionnaire from Diabetes Canada</a>, and talk to a health professional about any concern.</div>
+        </div>
+      </div>
+    </div></section>
+
+    <section id="evidence" style="background:var(--white);border-top:1px solid var(--line);border-bottom:1px solid var(--line)"><div class="wrap">
+      <h2>Evidence: is it better than a simple rule, and are its percentages honest?</h2>
+      <p class="sub">All scores come from 30% of the data held back from training. The simple rule uses age and BMI only.</p>
+      <div class="grid g2" style="margin-top:18px">
+        <div class="card" style="overflow-x:auto"><table class="t" id="metrics"></table>
+          <p style="margin-top:12px;font-size:.88rem;color:var(--muted)">AUC: how well the model ranks people with diabetes above those without (0.5 is random, 1.0 is perfect). Brier: average error in the percentages (lower is better). Flagged: share of people above the 20% review line. Caught: share of people with diabetes above that line.</p></div>
+        <div class="card"><h3>Calibration: do 30% predictions come true 30% of the time?</h3><svg id="calib" viewBox="0 0 320 240" role="img" aria-label="Calibration chart" style="width:100%;max-width:420px;display:block;margin:0 auto"></svg>
+          <p id="calib-text" style="font-size:.88rem;color:var(--muted);margin-top:8px"></p></div>
+      </div>
+      <div class="note warn" id="finding-smote"></div>
+      <div class="note info" id="finding-income"></div>
+    </div></section>
+
+    <section id="country"><div class="wrap">
+      <h2>US vs Canada: a gap that was mostly about the inputs</h2>
+      <p class="sub">The original 2025 notebook trained models on the US survey (BRFSS) and the Canadian survey (CCHS) and found the Canadian models scored lower. Re-checking it showed the two models did not use the same inputs.</p>
+      <div class="grid g2" style="margin-top:18px">
+        <div class="card" style="overflow-x:auto"><table class="t" id="country-table"></table></div>
+        <div class="card"><h3>What changed in the re-analysis</h3><ul style="margin:0;padding-left:18px">
+          <li>The US model used all 21 survey columns, including age, income and general health. The Canadian model used only blood pressure, cholesterol, BMI class, smoking, physical activity, fruit and vegetables.</li>
+          <li>Trained on the same kinds of inputs, the US data scores <b id="harm-auc">–</b>. That is close to the Canadian result of 0.773.</li>
+          <li>The US label also counted prediabetes as diabetes. The Canadian label did not. The rebuilt model drops prediabetes answers.</li>
+          <li>So the original gap says more about inputs and labels than about the two countries.</li>
+        </ul></div>
+      </div>
+      <div class="note info">The Canadian survey file is not stored in this repository, so the Canadian scores above are the notebook's results and were not re-run.</div>
+    </div></section>
+
+    <section id="fairness" style="background:var(--white);border-top:1px solid var(--line);border-bottom:1px solid var(--line)"><div class="wrap">
+      <h2>Fairness check</h2>
+      <p class="sub">Income and education are not model inputs. They are used here only to test whether the model works equally well for different groups.</p>
+      <div class="card" style="margin-top:18px;overflow-x:auto"><table class="t" id="segments"></table></div>
+      <div class="grid g2" style="margin-top:18px">
+        <div class="note warn" style="margin:0" id="fair-1"></div>
+        <div class="note warn" style="margin:0" id="fair-2"></div>
+      </div>
+    </div></section>
+
+    <section id="oversight"><div class="wrap">
+      <h2>Limits and human oversight</h2>
+      <div class="grid g3" style="margin-top:18px">
+        <div class="card"><p class="label">Use it for</p><h3>Learning and planning</h3><p>Showing how survey data relates to diabetes, and helping a public health analyst think about which groups to reach with screening.</p></div>
+        <div class="card"><p class="label">Do not use it for</p><h3>Decisions about a person</h3><p>Diagnosis, treatment, insurance, hiring, or any choice about an individual. Use a validated tool and a health professional.</p></div>
+        <div class="card"><p class="label">A person decides</p><h3>Human in control</h3><p>The model shows a percentage, the factors behind it, and its weak spots. A qualified person interprets it.</p></div>
+      </div>
+      <div class="grid g2" style="margin-top:18px">
+        <div class="card"><h3>Known limits</h3><ul style="margin:0;padding-left:18px">
+          <li>The survey asks whether a person has ever been told they have diabetes. The model describes who has diagnosed diabetes now. It does not predict who will develop it.</li>
+          <li>Answers are self-reported and from one year, 2015. People with undiagnosed diabetes are counted as "no".</li>
+          <li>Coefficients are patterns, not causes. Heavy drinking lowers the estimate, which most likely reflects who drinks and who changed habits after a diagnosis. It is not a health benefit.</li>
+          <li>Survey weights are not in this public file, so results describe the people who answered, not the full US population.</li>
+          <li id="dup-li"></li>
+        </ul></div>
+        <div class="card"><h3>If this were deployed</h3><ul style="margin:0;padding-left:18px">
+          <li>Validate on recent Canadian data before any use in Canada.</li>
+          <li>Recheck calibration and the fairness table each year, and after any change in the data source.</li>
+          <li>Set the review threshold with clinicians, weighing missed cases against extra follow-ups.</li>
+          <li>Keep the tool advisory, with a clear path to a health professional.</li>
+        </ul></div>
+      </div>
+    </div></section>
+
+    <section id="framework" style="background:var(--white);border-top:1px solid var(--line)"><div class="wrap">
+      <h2>Reliable AI checklist</h2>
+      <p class="sub">The six questions of the <a href="https://www.danieldemoz.com/#method">Reliable AI Adoption Framework</a>, answered for this project.</p>
+      <div class="fw" style="margin-top:18px">
+        <div class="card"><h3>Business problem</h3><p>Understand which survey answers relate to diabetes, and whether a model built in one country can be trusted in another. Success: honest percentages and equal performance across groups.</p></div>
+        <div class="card"><h3>Data readiness</h3><p>BRFSS 2015 health indicators (CDC survey, public cleaned version). Self-reported, one year, no survey weights. Prediabetes answers removed so the label matches the Canadian survey.</p></div>
+        <div class="card"><h3>Governance and risk</h3><p>Health is a high-stakes area, so the tool is advisory and educational only. Income and education are excluded as inputs and used to audit fairness instead.</p></div>
+        <div class="card"><h3>Technology and tools</h3><p>Logistic regression, chosen over gradient boosting because it scored almost the same and every factor can be shown. No oversampling, so the percentages stay calibrated.</p></div>
+        <div class="card"><h3>People and adoption</h3><p>Each result shows the factors behind it and points people to CANRISK and a health professional. The page explains weak spots in plain words.</p></div>
+        <div class="card"><h3>Outcomes and monitoring</h3><p>Calibration and the fairness table are the checks to repeat. The next step is validation on Canadian data.</p></div>
+      </div>
+    </div></section>
+  </main>
+
+  <footer class="rai-foot"><div class="wrap">
+    <span>Built by Daniel S. Demoz · <a href="https://www.danieldemoz.com">danieldemoz.com</a></span>
+    <span>Data: CDC Behavioral Risk Factor Surveillance System 2015, health indicators version · Educational use only</span>
+  </div></footer>
+
+<script>
+(async function () {
+  const M = await (await fetch('model.json')).json();
+  const $ = id => document.getElementById(id);
+  const pct = v => (v * 100).toFixed(v < 0.1 ? 1 : 0) + '%';
+  const st = { sex: 'Female', gen: 'Good', bins: { HighBP: 1, HighChol: 0, Smoker: 0, PhysActivity: 1, Fruits: 1, Veggies: 1, HvyAlcoholConsump: 0, HeartDiseaseorAttack: 0, Stroke: 0, DiffWalk: 0 } };
+  $('chip-n').textContent = 'BRFSS 2015 · ' + M.data.rows_used.toLocaleString() + ' answers';
+
+  M.options.age.forEach(a => $('age').add(new Option(a, a)));
+  $('age').value = '50-54';
+  function seg(id, opts, key) {
+    const el = $(id); el.innerHTML = '';
+    opts.forEach(v => { const b = document.createElement('button'); b.type = 'button'; b.textContent = v; b.setAttribute('aria-pressed', String(st[key] === v));
+      b.onclick = () => { st[key] = v; seg(id, opts, key); run(); }; el.appendChild(b); });
+  }
+  seg('sex', M.options.sex, 'sex');
+  seg('gen', M.options.gen_health, 'gen');
+  Object.entries(M.binary).forEach(([k, label]) => {
+    const l = document.createElement('label');
+    l.innerHTML = '<input type="checkbox" ' + (st.bins[k] ? 'checked' : '') + '><span>' + label + '</span>';
+    l.querySelector('input').onchange = e => { st.bins[k] = e.target.checked ? 1 : 0; run(); };
+    $('bins').appendChild(l);
+  });
+  $('age').onchange = run; $('bmi').oninput = run;
+
+  const bmiBand = b => { const cuts = M.bmi_bins; let i = 0; while (i < cuts.length && b >= cuts[i]) i++; return M.options.bmi_band[i]; };
+  // Average contribution of each variable, weighted by training counts, so each
+  // factor can be shown relative to a typical answer.
+  const groupsOf = { age: M.options.age, sex: M.options.sex, bmi_band: M.options.bmi_band, gen_health: M.options.gen_health };
+  const avgContrib = {};
+  for (const [g, vals] of Object.entries(groupsOf)) {
+    let s = 0, n = 0; vals.forEach(v => { const k = g + '=' + v, c = M.support[k] || 0; s += (M.coef[k] || 0) * c; n += c; }); avgContrib[g] = s / n;
+  }
+  const total = M.data.train;
+  for (const k of Object.keys(M.binary)) avgContrib[k] = (M.coef[k + '=1'] || 0) * (M.support[k + '=1'] || 0) / total;
+  const nice = { age: 'Age', sex: 'Sex', bmi_band: 'BMI', gen_health: 'General health' };
+
+  function score(inp) {
+    let z = M.intercept; const parts = [];
+    for (const g of Object.keys(groupsOf)) { const c = M.coef[g + '=' + inp[g]] || 0; z += c; parts.push([nice[g] + ': ' + inp[g], c - avgContrib[g]]); }
+    for (const k of Object.keys(M.binary)) { const c = inp.bins[k] ? (M.coef[k + '=1'] || 0) : 0; z += c; parts.push([M.binary[k] + (inp.bins[k] ? ': yes' : ': no'), c - avgContrib[k]]); }
+    return [1 / (1 + Math.exp(-z)), parts];
+  }
+
+  function run() {
+    let b = parseFloat($('bmi').value); if (!isFinite(b)) b = 27; b = Math.max(12, Math.min(80, b));
+    const band = bmiBand(b); $('bmi-band').textContent = 'Band used by the model: ' + band;
+    const inp = { age: $('age').value, sex: st.sex, bmi_band: band, gen_health: st.gen, bins: st.bins };
+    const [p, parts] = score(inp);
+    const base = M.data.base_rate_train;
+    $('prob').textContent = pct(p);
+    $('fill').style.width = Math.min(100, p * 100) + '%';
+    $('avgmark').style.left = (base * 100) + '%';
+    const r = p / base;
+    $('verdict').textContent = r > 1.5 ? 'Well above the average adult in the data.' : r < 0.67 ? 'Below the average adult in the data.' : 'Close to the average adult in the data.';
+    $('c-avg').textContent = pct(base);
+    // Average over the other answers for this age and sex: use the training mix of binary answers.
+    const typical = { age: inp.age, sex: inp.sex, bmi_band: '25-29.9', gen_health: 'Good', bins: {} };
+    Object.keys(M.binary).forEach(k => typical.bins[k] = (M.support[k + '=1'] || 0) / total > 0.5 ? 1 : 0);
+    $('c-age').textContent = pct(score(typical)[0]);
+    $('c-flag').textContent = p >= M.threshold ? 'Yes' : 'No';
+    parts.sort((a, b2) => Math.abs(b2[1]) - Math.abs(a[1]));
+    $('why').innerHTML = parts.slice(0, 4).map(([t, v]) => '<li><span>' + t + '</span><b>' + (v > 0 ? 'raises' : 'lowers') + '</b></li>').join('');
+    const n = [];
+    const young = M.options.age.indexOf(inp.age) <= 4;
+    if (young) n.push(['warn', 'For adults under 45, the model catches only ' + pct(M.segments.find(s => s.group === 'Age group' && s.value === '18-44').recall) + ' of people with diabetes at the 20% review line. A low number here is not reassurance.']);
+    if (M.options.age.indexOf(inp.age) >= 9) n.push(['warn', 'For adults 65 and over, the model ranks risk less well (AUC ' + M.segments.find(s => s.group === 'Age group' && s.value === '65+').auc.toFixed(2) + ').']);
+    if (inp.bins.HvyAlcoholConsump) n.push(['info', 'Heavy drinking lowers this estimate. That is a pattern in the survey, not a health benefit.']);
+    if (b >= 50 || b < 16) n.push(['warn', 'This BMI is rare in the data, so the estimate is less certain.']);
+    $('notes').innerHTML = n.map(([c, t]) => '<div class="note ' + c + '">' + t + '</div>').join('');
+  }
+  run();
+
+  // Evidence
+  const names = { baseline_age_bmi: 'Simple rule: age and BMI only', harmonized_6_plus_bmi: 'Inputs both surveys share', demo_logistic: 'Logistic regression (used here)', gb_all_columns: 'Gradient boosting, all 21 columns', original_notebook_smote: 'Original notebook set-up (SMOTE)' };
+  const order = ['baseline_age_bmi', 'harmonized_6_plus_bmi', 'demo_logistic', 'gb_all_columns', 'original_notebook_smote'];
+  $('metrics').innerHTML = '<tr><th>Model</th><th>AUC</th><th>Brier</th><th>Avg predicted</th><th>Actual</th><th>Flagged</th><th>Caught</th></tr>' +
+    order.filter(k => M.metrics[k]).map(k => { const m = M.metrics[k]; return '<tr class="' + (k === 'demo_logistic' ? 'hl' : '') + '"><td>' + names[k] + '</td><td>' + m.auc.toFixed(3) + '</td><td>' + m.brier.toFixed(3) + '</td><td>' + pct(m.mean_predicted) + '</td><td>' + pct(m.actual_rate) + '</td><td>' + pct(m.flagged_share) + '</td><td>' + pct(m.recall) + '</td></tr>'; }).join('');
+  const sm = M.metrics.original_notebook_smote, dm = M.metrics.demo_logistic, gb = M.metrics.gb_all_columns;
+  if (sm) $('finding-smote').innerHTML = '<b>Honest finding:</b> the original notebook balanced the classes with SMOTE. Ranking stayed good (AUC ' + sm.auc.toFixed(3) + '), but the percentages were badly inflated: an average prediction of ' + pct(sm.mean_predicted) + ' against an actual rate of ' + pct(sm.actual_rate) + ', with ' + pct(sm.flagged_share) + ' of people flagged. The rebuilt model skips oversampling and its average matches reality.';
+  const ie = M.metrics.demo_plus_income_education;
+  $('finding-income').innerHTML = '<b>Design choice:</b> leaving out income and education costs very little. The same model with them scores AUC ' + ie.auc.toFixed(3) + ', against ' + dm.auc.toFixed(3) + ' without them. Gradient boosting with every column reaches ' + gb.auc.toFixed(3) + '.';
+
+  const svg = $('calib'), W = 320, H = 240, P = 42, mx = 0.55;
+  const sx = v => P + v / mx * (W - P - 10), sy = v => H - P - v / mx * (H - P - 10);
+  let g = '<line x1="' + sx(0) + '" y1="' + sy(0) + '" x2="' + sx(mx) + '" y2="' + sy(mx) + '" stroke="#ddd8ce" stroke-dasharray="4 4"/>';
+  [0, .1, .2, .3, .4, .5].forEach(t => { g += '<text x="' + (P - 6) + '" y="' + (sy(t) + 4) + '" font-size="10" text-anchor="end" fill="#566670">' + Math.round(t * 100) + '%</text><text x="' + sx(t) + '" y="' + (H - P + 16) + '" font-size="10" text-anchor="middle" fill="#566670">' + Math.round(t * 100) + '%</text>'; });
+  g += '<polyline fill="none" stroke="#b87548" stroke-width="2.5" points="' + M.calibration.map(c => sx(c.pred) + ',' + sy(c.actual)).join(' ') + '"/>';
+  M.calibration.forEach(c => g += '<circle cx="' + sx(c.pred) + '" cy="' + sy(c.actual) + '" r="4" fill="#172b38"/>');
+  g += '<text x="' + (W / 2) + '" y="' + (H - 4) + '" font-size="10" text-anchor="middle" fill="#566670">Predicted</text><text x="10" y="' + (H / 2) + '" font-size="10" text-anchor="middle" fill="#566670" transform="rotate(-90 10 ' + (H / 2) + ')">Actual</text>';
+  svg.innerHTML = g;
+  $('calib-text').textContent = 'Each dot is one tenth of the held-back answers, sorted by prediction. Dots on the dashed line mean the percentages match reality. Average predicted: ' + pct(dm.mean_predicted) + '. Actual: ' + pct(dm.actual_rate) + '.';
+
+  // Country table
+  const nb = M.notebook_results, h = M.metrics.harmonized_6_plus_bmi;
+  $('harm-auc').textContent = 'AUC ' + h.auc.toFixed(3);
+  $('country-table').innerHTML = '<tr><th>Model and inputs</th><th>US (BRFSS)</th><th>Canada (CCHS)</th></tr>' +
+    '<tr><td>Notebook: logistic regression, different inputs per country</td><td>' + nb.brfss.logistic_regression.toFixed(3) + '</td><td>' + nb.cchs.logistic_regression.toFixed(3) + '</td></tr>' +
+    '<tr><td>Notebook: XGBoost, different inputs per country</td><td>' + nb.brfss.xgboost.toFixed(3) + '</td><td>' + nb.cchs.xgboost.toFixed(3) + '</td></tr>' +
+    '<tr class="hl"><td>Re-analysis: same kinds of inputs</td><td>' + h.auc.toFixed(3) + '</td><td>' + nb.cchs.logistic_regression.toFixed(3) + '*</td></tr>';
+  $('country-table').insertAdjacentHTML('afterend', '<p style="margin-top:10px;font-size:.85rem;color:var(--muted)">AUC on held-back data. *Notebook result, with prediabetes not counted.</p>');
+
+  // Fairness
+  $('segments').innerHTML = '<tr><th>Group</th><th>People</th><th>Actual rate</th><th>Average predicted</th><th>AUC</th><th>Caught at 20%</th><th>Status</th></tr>' +
+    M.segments.map(s => { const gap = s.predicted - s.actual;
+      const [cls, txt] = s.auc < 0.77 ? ['bad', 'Weaker ranking'] : gap < -0.02 ? ['warn', 'Under-predicts'] : gap > 0.02 ? ['warn', 'Over-predicts'] : s.recall < 0.4 ? ['warn', 'Misses many cases'] : ['ok', 'Good'];
+      return '<tr><td>' + s.group + ': ' + s.value + '</td><td>' + s.n.toLocaleString() + '</td><td>' + pct(s.actual) + '</td><td>' + pct(s.predicted) + '</td><td>' + s.auc.toFixed(2) + '</td><td>' + pct(s.recall) + '</td><td><span class="pill ' + cls + '">' + txt + '</span></td></tr>'; }).join('');
+  const segOf = (g, v) => M.segments.find(s => s.group === g && s.value === v);
+  const lo = segOf('Household income', 'Under $25k'), ed = segOf('Education', 'No high school diploma');
+  $('fair-1').innerHTML = '<b>Lower-income groups are under-estimated.</b> For household income under $25k the model predicts ' + pct(lo.predicted) + ' against an actual ' + pct(lo.actual) + '. Without a high school diploma: ' + pct(ed.predicted) + ' against ' + pct(ed.actual) + '. Any real use would need a correction or a lower review line for these groups.';
+  const y = segOf('Age group', '18-44');
+  $('fair-2').innerHTML = '<b>Younger adults are often missed.</b> Under 45, only ' + pct(y.recall) + ' of people with diabetes cross the 20% review line, because the rate in this age group is low (' + pct(y.actual) + '). A single threshold does not suit every age.';
+  $('dup-li').textContent = M.data.duplicates.toLocaleString() + ' rows repeat another row exactly. With mostly yes/no answers this is expected from different people, so they were kept.';
+})();
+</script>
+</body>
+</html>

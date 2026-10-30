@@ -1,0 +1,403 @@
+{
+ "intercept": -1.46577,
+ "coef": {
+  "age=18-24": -1.11586,
+  "age=25-29": -1.1808,
+  "age=30-34": -1.05986,
+  "age=35-39": -0.63065,
+  "age=40-44": -0.33863,
+  "age=45-49": -0.12433,
+  "age=50-54": 0.07719,
+  "age=55-59": 0.17623,
+  "age=60-64": 0.3982,
+  "age=65-69": 0.59608,
+  "age=70-74": 0.67791,
+  "age=75-79": 0.60778,
+  "age=80+": 0.47199,
+  "sex=Female": -0.8238,
+  "sex=Male": -0.62095,
+  "bmi_band=18.5-24.9": -0.90429,
+  "bmi_band=25-29.9": -0.3926,
+  "bmi_band=30-34.9": 0.06865,
+  "bmi_band=35-39.9": 0.4439,
+  "bmi_band=40+": 0.68763,
+  "bmi_band=Under 18.5": -1.34805,
+  "gen_health=Excellent": -1.49039,
+  "gen_health=Fair": 0.3918,
+  "gen_health=Good": -0.08925,
+  "gen_health=Poor": 0.55883,
+  "gen_health=Very good": -0.81574,
+  "HighBP=1": 0.71704,
+  "HighChol=1": 0.5628,
+  "Smoker=1": -0.01797,
+  "PhysActivity=1": -0.05736,
+  "Fruits=1": -0.02002,
+  "Veggies=1": -0.07105,
+  "HvyAlcoholConsump=1": -0.80529,
+  "HeartDiseaseorAttack=1": 0.28082,
+  "Stroke=1": 0.16787,
+  "DiffWalk=1": 0.15768
+ },
+ "support": {
+  "age=18-24": 4023,
+  "age=25-29": 5220,
+  "age=30-34": 7788,
+  "age=35-39": 9606,
+  "age=40-44": 11082,
+  "age=45-49": 13537,
+  "age=50-54": 18179,
+  "age=55-59": 21206,
+  "age=60-64": 22747,
+  "age=65-69": 21952,
+  "age=70-74": 16227,
+  "age=75-79": 10911,
+  "age=80+": 11856,
+  "sex=Female": 97709,
+  "sex=Male": 76625,
+  "bmi_band=18.5-24.9": 47862,
+  "bmi_band=25-29.9": 64418,
+  "bmi_band=30-34.9": 36601,
+  "bmi_band=35-39.9": 13992,
+  "bmi_band=40+": 9313,
+  "bmi_band=Under 18.5": 2148,
+  "gen_health=Excellent": 31562,
+  "gen_health=Fair": 21304,
+  "gen_health=Good": 51618,
+  "gen_health=Poor": 8212,
+  "gen_health=Very good": 61638,
+  "HighBP=1": 74233,
+  "HighChol=1": 73320,
+  "Smoker=1": 77276,
+  "PhysActivity=1": 132056,
+  "Fruits=1": 110677,
+  "Veggies=1": 141552,
+  "HvyAlcoholConsump=1": 9763,
+  "HeartDiseaseorAttack=1": 16287,
+  "Stroke=1": 7023,
+  "DiffWalk=1": 29143
+ },
+ "options": {
+  "age": [
+   "18-24",
+   "25-29",
+   "30-34",
+   "35-39",
+   "40-44",
+   "45-49",
+   "50-54",
+   "55-59",
+   "60-64",
+   "65-69",
+   "70-74",
+   "75-79",
+   "80+"
+  ],
+  "sex": [
+   "Female",
+   "Male"
+  ],
+  "bmi_band": [
+   "Under 18.5",
+   "18.5-24.9",
+   "25-29.9",
+   "30-34.9",
+   "35-39.9",
+   "40+"
+  ],
+  "gen_health": [
+   "Excellent",
+   "Very good",
+   "Good",
+   "Fair",
+   "Poor"
+  ]
+ },
+ "bmi_bins": [
+  18.5,
+  25,
+  30,
+  35,
+  40
+ ],
+ "binary": {
+  "HighBP": "High blood pressure",
+  "HighChol": "High cholesterol",
+  "Smoker": "Smoked 100+ cigarettes in life",
+  "PhysActivity": "Physical activity in past 30 days",
+  "Fruits": "Fruit at least once a day",
+  "Veggies": "Vegetables at least once a day",
+  "HvyAlcoholConsump": "Heavy drinking",
+  "HeartDiseaseorAttack": "Heart disease or heart attack",
+  "Stroke": "Ever had a stroke",
+  "DiffWalk": "Serious difficulty walking or climbing stairs"
+ },
+ "threshold": 0.2,
+ "data": {
+  "rows_total": 253680,
+  "duplicates": 23899,
+  "prediabetes_dropped": 4631,
+  "rows_used": 249049,
+  "train": 174334,
+  "test": 74715,
+  "base_rate_train": 0.142
+ },
+ "metrics": {
+  "demo_logistic": {
+   "auc": 0.826,
+   "pr_auc": 0.433,
+   "brier": 0.099,
+   "mean_predicted": 0.142,
+   "actual_rate": 0.142,
+   "recall": 0.655,
+   "precision": 0.366,
+   "flagged_share": 0.254
+  },
+  "harmonized_6_plus_bmi": {
+   "auc": 0.777,
+   "pr_auc": 0.361,
+   "brier": 0.106,
+   "mean_predicted": 0.141,
+   "actual_rate": 0.142,
+   "recall": 0.61,
+   "precision": 0.316,
+   "flagged_share": 0.274
+  },
+  "baseline_age_bmi": {
+   "auc": 0.747,
+   "pr_auc": 0.315,
+   "brier": 0.109,
+   "mean_predicted": 0.141,
+   "actual_rate": 0.142,
+   "recall": 0.453,
+   "precision": 0.328,
+   "flagged_share": 0.196
+  },
+  "demo_plus_income_education": {
+   "auc": 0.827,
+   "pr_auc": 0.435,
+   "brier": 0.098,
+   "mean_predicted": 0.142,
+   "actual_rate": 0.142,
+   "recall": 0.656,
+   "precision": 0.365,
+   "flagged_share": 0.255
+  },
+  "gb_all_columns": {
+   "auc": 0.834,
+   "pr_auc": 0.448,
+   "brier": 0.097,
+   "mean_predicted": 0.142,
+   "actual_rate": 0.142,
+   "recall": 0.681,
+   "precision": 0.366,
+   "flagged_share": 0.264
+  },
+  "original_notebook_smote": {
+   "auc": 0.815,
+   "pr_auc": 0.429,
+   "brier": 0.178,
+   "mean_predicted": 0.388,
+   "actual_rate": 0.158,
+   "recall": 0.956,
+   "precision": 0.229,
+   "flagged_share": 0.658
+  }
+ },
+ "calibration": [
+  {
+   "pred": 0.007,
+   "actual": 0.005,
+   "n": 7472
+  },
+  {
+   "pred": 0.016,
+   "actual": 0.01,
+   "n": 7472
+  },
+  {
+   "pred": 0.027,
+   "actual": 0.022,
+   "n": 7472
+  },
+  {
+   "pred": 0.043,
+   "actual": 0.038,
+   "n": 7472
+  },
+  {
+   "pred": 0.064,
+   "actual": 0.069,
+   "n": 7472
+  },
+  {
+   "pred": 0.096,
+   "actual": 0.107,
+   "n": 7471
+  },
+  {
+   "pred": 0.141,
+   "actual": 0.152,
+   "n": 7471
+  },
+  {
+   "pred": 0.206,
+   "actual": 0.214,
+   "n": 7471
+  },
+  {
+   "pred": 0.308,
+   "actual": 0.311,
+   "n": 7471
+  },
+  {
+   "pred": 0.51,
+   "actual": 0.491,
+   "n": 7471
+  }
+ ],
+ "segments": [
+  {
+   "group": "Sex",
+   "value": "Female",
+   "n": 41661,
+   "actual": 0.132,
+   "predicted": 0.131,
+   "auc": 0.836,
+   "recall": 0.645,
+   "flagged": 0.231
+  },
+  {
+   "group": "Sex",
+   "value": "Male",
+   "n": 33054,
+   "actual": 0.154,
+   "predicted": 0.155,
+   "auc": 0.812,
+   "recall": 0.666,
+   "flagged": 0.283
+  },
+  {
+   "group": "Age group",
+   "value": "18-44",
+   "n": 16230,
+   "actual": 0.043,
+   "predicted": 0.041,
+   "auc": 0.844,
+   "recall": 0.292,
+   "flagged": 0.037
+  },
+  {
+   "group": "Age group",
+   "value": "45-64",
+   "n": 32558,
+   "actual": 0.137,
+   "predicted": 0.137,
+   "auc": 0.828,
+   "recall": 0.649,
+   "flagged": 0.24
+  },
+  {
+   "group": "Age group",
+   "value": "65+",
+   "n": 25927,
+   "actual": 0.21,
+   "predicted": 0.21,
+   "auc": 0.758,
+   "recall": 0.707,
+   "flagged": 0.408
+  },
+  {
+   "group": "Household income",
+   "value": "$25k-50k",
+   "n": 18347,
+   "actual": 0.156,
+   "predicted": 0.159,
+   "auc": 0.798,
+   "recall": 0.657,
+   "flagged": 0.297
+  },
+  {
+   "group": "Household income",
+   "value": "$50k-75k",
+   "n": 12645,
+   "actual": 0.124,
+   "predicted": 0.127,
+   "auc": 0.814,
+   "recall": 0.593,
+   "flagged": 0.217
+  },
+  {
+   "group": "Household income",
+   "value": "$75k+",
+   "n": 26863,
+   "actual": 0.081,
+   "predicted": 0.091,
+   "auc": 0.84,
+   "recall": 0.517,
+   "flagged": 0.134
+  },
+  {
+   "group": "Household income",
+   "value": "Under $25k",
+   "n": 16860,
+   "actual": 0.238,
+   "predicted": 0.214,
+   "auc": 0.784,
+   "recall": 0.753,
+   "flagged": 0.428
+  },
+  {
+   "group": "Education",
+   "value": "College graduate",
+   "n": 31813,
+   "actual": 0.098,
+   "predicted": 0.104,
+   "auc": 0.84,
+   "recall": 0.558,
+   "flagged": 0.165
+  },
+  {
+   "group": "Education",
+   "value": "High school graduate",
+   "n": 18436,
+   "actual": 0.183,
+   "predicted": 0.178,
+   "auc": 0.798,
+   "recall": 0.707,
+   "flagged": 0.344
+  },
+  {
+   "group": "Education",
+   "value": "No high school diploma",
+   "n": 3942,
+   "actual": 0.267,
+   "predicted": 0.239,
+   "auc": 0.755,
+   "recall": 0.765,
+   "flagged": 0.486
+  },
+  {
+   "group": "Education",
+   "value": "Some college",
+   "n": 20524,
+   "actual": 0.15,
+   "predicted": 0.148,
+   "auc": 0.818,
+   "recall": 0.66,
+   "flagged": 0.267
+  }
+ ],
+ "notebook_results": {
+  "note": "Reported by the original 2025 notebook. Not re-run here: the CCHS file is not in this repository.",
+  "brfss": {
+   "logistic_regression": 0.8149,
+   "random_forest": 0.7913,
+   "xgboost": 0.8206
+  },
+  "cchs": {
+   "logistic_regression": 0.7729,
+   "random_forest": 0.7055,
+   "xgboost": 0.7315
+  }
+ }
+}
